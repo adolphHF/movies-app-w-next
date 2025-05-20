@@ -2,10 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import { getPopularMovies } from "@/services/movies/getPopularMovies";
+import Link from "next/link";
+import MovieCard from "@/components/MovieCard/MovieCard";
+import MovieList from "@/components/MovieList/MovieList";
+import { IMovieDetail } from "@/types/MovieDetail";
 
 const PopularClientPage = () => {
   const [loading, setLoading] = useState(false);
-  const [movies, setMovies] = useState<any[]>([]);
+  const [movies, setMovies] = useState<IMovieDetail[]>([]);
 
   useEffect(() => {
     const fetchPopularMovies = async () => {
@@ -14,6 +18,10 @@ const PopularClientPage = () => {
       try {
         const data = await getPopularMovies();
         setMovies(data.results);
+        console.log(
+          "Esto es lo que devuelve el get popular movies: ",
+          data.results
+        ); //TODO clean this logs
       } catch (err) {
         console.error("Error loading movies: ", err);
       }
@@ -23,17 +31,23 @@ const PopularClientPage = () => {
     fetchPopularMovies();
   }, []);
 
+  // return (
+  //   <div>
+  //     <h2 className="text-xl font-bold mb-4">Client-rendered Popular Movies</h2>
+  //     {loading && <p className="text-sm text-muted-foreground">Cargando...</p>}
+  //     {movies.map((movie) => (
+  //       <div key={movie.id}>
+  //         <span>{movie.title}</span>
+  //       </div>
+  //     ))}
+  //   </div>
+  // );
+
+  // Mostrar las peliculas
   return (
     <div>
-      <h2 className="text-xl font-bold mb-4">Client-rendered Popular Movies</h2>
-      {loading && <p className="text-sm text-muted-foreground">Cargando...</p>}
-      {movies.map((movie) => (
-        <div key={movie.id}>
-          <span>{movie.title}</span>
-        </div>
-      ))}
+      <MovieList movies={movies} loading={loading} titlePage={"Popular"} />;
     </div>
   );
 };
-
 export default PopularClientPage;
