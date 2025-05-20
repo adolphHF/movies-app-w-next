@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { getPopularMovies } from "@/services/movies/getPopularMovies";
-import Link from "next/link";
-import MovieCard from "@/components/MovieCard/MovieCard";
 import MovieList from "@/components/MovieList/MovieList";
 import { IMovieDetail } from "@/types/MovieDetail";
 
