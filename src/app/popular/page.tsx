@@ -47,7 +47,7 @@ const PopularClientPage = () => {
       {hasMore && (
         <div className="flex justify-center mt-6">
           <Button onClick={handleLoadMore} disabled={loading}>
-            {loading ? "Cargando..." : "Cargar más"}
+            {loading ? "Loading..." : "Load More"}
           </Button>
         </div>
       )}

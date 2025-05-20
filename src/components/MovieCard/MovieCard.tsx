@@ -80,7 +80,7 @@ const MovieCard: React.FC<IMovieCard> = ({
 6.96479 8.46553 6.64194 8.82547 5.99623L9.15316 5.40838Z"
                         fill="#eab308"
                       />
-                      {/* TODO QUE ES ESTE PATH? */}
+                      {/* TODO PREGUNTAR QUE ES ESTE PATH? */}
                     </g>
                   </svg>
                 </span>

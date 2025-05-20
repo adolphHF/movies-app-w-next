@@ -24,14 +24,6 @@ const TopRatedPage = () => {
       }
       setPage(data.page);
       setHasMore(data.page < data.total_pages);
-      //setMovies(data.results);
-      // console.log(
-      //   "Esto es lo que devuelve el get top rated movies: ",
-      //   data.results
-      // ); //TODO clean this logs
-
-      // console.log("Este es todo el data: ", data);
-      // setPage(data.page);
     } catch (err) {
       console.error("Error loading movies: ", err);
     }
@@ -56,7 +48,7 @@ const TopRatedPage = () => {
       {hasMore && (
         <div className="flex justify-center mt-6">
           <Button onClick={handleLoadMore} disabled={loading}>
-            {loading ? "Cargando..." : "Cargar más"}
+            {loading ? "Loading..." : "Load More"}
           </Button>
         </div>
       )}
