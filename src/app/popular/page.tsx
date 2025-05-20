@@ -4,47 +4,53 @@ import React, { useEffect, useState } from "react";
 import { getPopularMovies } from "@/services/movies/getPopularMovies";
 import MovieList from "@/components/MovieList/MovieList";
 import { IMovieDetail } from "@/types/MovieDetail";
+import { Button } from "@/components/ui/button";
 
 const PopularClientPage = () => {
   const [loading, setLoading] = useState(false);
   const [movies, setMovies] = useState<IMovieDetail[]>([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true); // si hay más páginas
+
+  const fetchPopularMovies = async (currentPage: number) => {
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // simulate 2s delay
+    try {
+      const data = await getPopularMovies(currentPage);
+      if (currentPage === 1) {
+        setMovies(data.results);
+      } else {
+        setMovies((prev) => [...prev, ...data.results]);
+      }
+      setPage(data.page);
+      setHasMore(data.page < data.total_pages);
+    } catch (err) {
+      console.error("Error loading movies: ", err);
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const fetchPopularMovies = async () => {
-      setLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // simulate 2s delay
-      try {
-        const data = await getPopularMovies();
-        setMovies(data.results);
-        console.log(
-          "Esto es lo que devuelve el get popular movies: ",
-          data.results
-        ); //TODO clean this logs
-      } catch (err) {
-        console.error("Error loading movies: ", err);
-      }
-      setLoading(false);
-    };
-
-    fetchPopularMovies();
+    fetchPopularMovies(1);
   }, []);
 
-  // return (
-  //   <div>
-  //     <h2 className="text-xl font-bold mb-4">Client-rendered Popular Movies</h2>
-  //     {loading && <p className="text-sm text-muted-foreground">Cargando...</p>}
-  //     {movies.map((movie) => (
-  //       <div key={movie.id}>
-  //         <span>{movie.title}</span>
-  //       </div>
-  //     ))}
-  //   </div>
-  // );
+  const handleLoadMore = () => {
+    if (hasMore && !loading) {
+      fetchPopularMovies(page + 1);
+    }
+  };
 
   // Mostrar las peliculas
   return (
     <div>
       <MovieList movies={movies} loading={loading} titlePage={"Popular"} />;
+      {hasMore && (
+        <div className="flex justify-center mt-6">
+          <Button onClick={handleLoadMore} disabled={loading}>
+            {loading ? "Cargando..." : "Cargar más"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
