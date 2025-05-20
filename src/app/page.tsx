@@ -54,7 +54,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="p-6 space-y-12">
+    <div className="p-6 space-y-12 px-4 sm:px-8">
       {/* Personas en tendencia */}
       <section>
         <h2 className="text-2xl font-semibold mb-4">Trending People</h2>

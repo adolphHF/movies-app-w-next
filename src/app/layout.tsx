@@ -18,7 +18,7 @@ export default function RootLayout({
       <body className={`antialiased`}>
         <GuestSessionProvider>
           <Header />
-          <main className="p-6 mt-16">{children}</main>
+          <main className="p-6">{children}</main>
         </GuestSessionProvider>
       </body>
     </html>
