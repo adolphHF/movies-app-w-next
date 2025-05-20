@@ -1,7 +1,7 @@
 import api from "../api";
 
 export const getPopularMovies = async () => {
-  let res: any;
+  let res: unknown;
   const endpoint = "/movie/popular?language=en-US";
   await api
     .get(endpoint)

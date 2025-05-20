@@ -1,7 +1,7 @@
 import api from "../api";
 
 export const getNowPlayingMovies = async () => {
-  let res: any;
+  let res: unknown;
   const endpoint = "/movie/now_playing?language=en-US";
   await api
     .get(endpoint)
